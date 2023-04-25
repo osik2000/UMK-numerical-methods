@@ -22,17 +22,22 @@ def laguerre(p, a, N):
     X_k = a
 
     k = 1
-    while k < N:
+    while k < N and pOf(X_k) > EPSILON:
         if pOf(X_k) == 0:
             print("dzielenie przez zero!\nKonczenie pracy programu...")
+            print(f"\nOstatni wyliczony po {k} iteracjach pierwiastek wielomianu {p} to: {X_k}")
             return X_k
         G = dpOf(X_k) / pOf(X_k)
         H = G ** 2 - d2pOf(X_k) / pOf(X_k)
-        #  |G + sqrt((n - 1)*(nH - G^2))| > |G - sqrt((n - 1)*(nH - G^2))|
-        if abs(G + ((n - 1) * (n * H - G ** 2))**(1/2)) > abs(G - ((n - 1) * (n * H - G ** 2))**(1/2)):
-            b = n / (G + ((n - 1) * (n * H - G ** 2))**(1/2))
+        if (n - 1) * (n * H - G ** 2) >= 0:
+            if abs(G + sqrt((n - 1) * (n * H - G ** 2))) > abs(G - sqrt((n - 1) * (n * H - G ** 2))):
+                b = n / (G + ((n - 1) * (n * H - G ** 2)) ** (1 / 2))
+            else:
+                b = n / (G - ((n - 1) * (n * H - G ** 2)) ** (1 / 2))
         else:
-            b = n / (G - ((n - 1) * (n * H - G ** 2))**(1/2))
+            print("Liczba pod pierwiastkiem liczbą ujemną!\nKonczenie pracy programu...")
+            print(f"\nOstatni wyliczony po {k} iteracjach potencjalny pierwiastek wielomianu {p} to: {X_k}")
+            return X_k
 
         X_k = X_k - b
         k = k + 1
@@ -40,15 +45,19 @@ def laguerre(p, a, N):
     print(f"\nWyliczony po {k} iteracjach pierwiastek wielomianu {p} to: {X_k}")
     return X_k
 
-# przykladowe uzycie (dzielenie przez 0):
+
+# przykladowe uzycie (dzielenie przez 0) (Funkcja zwroci ostatnią wartość, która jest zbliżona do miejsca zerowego):
 # python Laguerre.py [1,2,3,-1] 1.5 10
 
-# przykladowe uzycie (dzielenie przez ujemna wartosc pierwiastka)
+# przykladowe uzycie (dzielenie przez ujemna wartosc pierwiastka) (Funkcja nie ma miejsc zerowych)
 # python Laguerre.py [1,2,3] 2 10
 
 # przykladowe uzycie
 #
 
-
-laguerre(sys.argv[1], sys.argv[2], int(sys.argv[3]))
-
+if len(sys.argv) > 1:
+    laguerre(sys.argv[1], sys.argv[2], int(sys.argv[3]))
+else:
+    print("Prosze podac argumenty funkcji!\n\n"
+          "Przykladowe wywolanie:\n"
+          "python Laguerre.py [1,2,3] 2 10")
