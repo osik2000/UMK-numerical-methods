@@ -1,0 +1,152 @@
+====================================================================================================
+Program: Wyznaczanie pierwiastków funkcji
+Język programowania: Python
+Autor: Paweł Osiński
+====================================================================================================
+Każdy z plików posiada swoją funkcję (bisection, falsi lub halley).
+Funkcje przyjmują poszczególne argumenty:
+====================================================================================================
+
+bisection(a, b, n, funkcja)
+
+a - pierwszy punkt przedziału
+b - drugi punkt przedziału
+n - maksymalna liczba iteracji
+funkcja - funkcja przyjmująca x jako argument i zwracająca liczbę (np. funkcja(x) może zwrócić x*2)
+
+====================================================================================================
+
+falsi(float(a), float(b), funkcja, n)
+
+a - pierwszy punkt przedziału (jako liczba zmiennoprzecinkowa)
+b - drugi punkt przedziału (jako liczba zmiennoprzecinkowa)
+n - maksymalna liczba iteracji
+funkcja - funkcja przyjmująca x jako argument i zwracająca liczbę (np. funkcja(x) może zwrócić x*2)
+
+====================================================================================================
+
+halley(x0, n, funkcja, pochodna_funkcji, druga_pochodna_funkcji) 
+
+x0 - początkowy punkt działania algorytmu
+n - maksymalna liczba iteracji
+funkcja - funkcja przyjmująca x jako argument i zwracająca liczbę (np. funkcja(x) może zwrócić x*2)
+pochodna_funkcji - funkcja przyjmująca x i zwracająca wartość pochodnej funkcji 'funkcja'
+druga_pochodna_funkcji - funkcja przyjmująca x i zwracająca wartość drugiej pochodnej funkcji 'funkcja'
+
+====================================================================================================
+
+Wybrane przykładowe funkcje:
+
+====================================================================================================
+Bisection:
+
+funkcja = sin(x)
+n = 100
+a = -2
+b = 2
+bisection(a, b, n, funkcja)
+
+Wynik:
+Pierwiastek funkcji to 0.0000000, znaleziono go po 1 iteracji.
+
+Jednakże gdy zmienimy tylko parametr a na -1
+program znajdzie pierwiastek dopiero po 31 iteracjach.
+
+----------------------------------------------------------------------------------------------------
+
+funkcja = cos(x-2)
+n = 100
+a = -3
+b = 5
+bisection(a, b, n, funkcja)
+
+
+Wynik:
+Pierwiastek funkcji to 3.5707963267, znaleziono go po 32 iteracjach.
+
+----------------------------------------------------------------------------------------------------
+
+funkcja = x^3 + 2x^2 + x - 1
+n = 100
+a = -1
+b = 3
+bisection(a, b, n, funkcja)
+
+
+Wynik:
+Pierwiastek funkcji to 0.4655712312, znaleziono go po 31 iteracjach.
+
+====================================================================================================
+Falsi:
+
+funkcja = sin(x)
+n = 100
+a = -2.0
+b = 3.0
+falsi(a, b, funkcja, n)
+
+Wynik:
+Pierwiastek funkcji to 0.0000000, znaleziono go po 6 iteracjach.
+
+----------------------------------------------------------------------------------------------------
+
+funkcja = e^-x * (3,2*sin(x) - 0,5*cos(x))
+n = 100
+a = 3.0
+b = 4.0
+falsi(a, b, funkcja, n)
+
+Wynik:
+Pierwiastek funkcji to 3.2965934672, znaleziono go po 9 iteracjach. 
+
+----------------------------------------------------------------------------------------------------
+
+funkcja = x^3 - x^2 + 2
+n = 100
+a = -200.0
+b = 300.0
+falsi(a, b, funkcja, n)
+
+Wynik:
+Pierwiastek funkcji to -19.1863166838, znaleziono go po 100 (=N) iteracjach.
+UWAGA:
+Jeżeli chcemy poznać bardzo zbliżoną wartość pierwiastka musimy ustawić N na 273463.
+To pokazuje jak niewydajny może być ten sposób dla niektórych argumentów.
+====================================================================================================
+Halley:
+
+funkcja = sin(x)
+pochodna_funkcji = cos(x)
+druga_pochodna_funkcji = -sin(x)
+n = 100
+x0 = -1
+halley(x0, n, funkcja, pochodna_funkcji, druga_pochodna_funkcji)
+
+Wynik:
+Pierwiastek funkcji to 0.0000000, znaleziono go po 3 iteracjach.
+
+----------------------------------------------------------------------------------------------------
+
+funkcja = x^3 -x^2 + 2
+pochodna_funkcji = x(3x - 2)
+druga_pochodna_funkcji = 6x - 2
+n = 100
+x0 = -200
+halley(x0, n, funkcja, pochodna_funkcji, druga_pochodna_funkcji)
+
+Wynik:
+Pierwiastek funkcji to -1.0000000, znaleziono go po 9 iteracjach. 
+(dla porównania proszę spojrzeć na kolosalną ilość iteracji w przypadku 
+użycia metody falsi dla tej samej funkcji)
+
+----------------------------------------------------------------------------------------------------
+
+funkcja = 2x^3 - 2x - 5
+pochodna_funkcji = 6x^2 - 2
+druga_pochodna_funkcji = 12x
+n = 100
+x0 = 0
+halley(x0, n, funkcja, pochodna_funkcji, druga_pochodna_funkcji)
+
+Wynik:
+Pierwiastek funkcji to 1.6005985449, znaleziono go po 15 iteracjach.
