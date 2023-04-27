@@ -3,7 +3,7 @@ import sys
 
 from numpy import poly1d, polyder, sqrt
 
-EPSILON = 0.000001
+EPSILON = 0.0000000001
 
 
 def laguerre(p, a, N):
@@ -11,7 +11,7 @@ def laguerre(p, a, N):
     a = float(a)
     N = int(N)
 
-    n = len(p)
+    n = len(p) - 1
 
     dp = polyder(p)
     d2p = polyder(dp)
@@ -22,10 +22,10 @@ def laguerre(p, a, N):
     X_k = a
 
     k = 1
-    while k < N and pOf(X_k) > EPSILON:
+    while k < N and abs(pOf(X_k)) > EPSILON:
         if pOf(X_k) == 0:
             print("dzielenie przez zero!\nKonczenie pracy programu...")
-            print(f"\nOstatni wyliczony po {k} iteracjach pierwiastek wielomianu {p} to: {X_k}")
+            print(f"\nOstatni wyliczony po {k} iteracjach pierwiastek wielomianu {p} to:", "{:.10f}\n".format(float(X_k)))
             return X_k
         G = dpOf(X_k) / pOf(X_k)
         H = G ** 2 - d2pOf(X_k) / pOf(X_k)
@@ -36,13 +36,13 @@ def laguerre(p, a, N):
                 b = n / (G - ((n - 1) * (n * H - G ** 2)) ** (1 / 2))
         else:
             print("Liczba pod pierwiastkiem liczbą ujemną!\nKonczenie pracy programu...")
-            print(f"\nOstatni wyliczony po {k} iteracjach potencjalny pierwiastek wielomianu {p} to: {X_k}")
+            print(f"\nOstatni wyliczony po {k} iteracjach potencjalny pierwiastek wielomianu {p} to:", "{:.10f}\n".format(float(X_k)))
             return X_k
 
         X_k = X_k - b
         k = k + 1
 
-    print(f"\nWyliczony po {k} iteracjach pierwiastek wielomianu {p} to: {X_k}")
+    print(f"\nWyliczony po {k} iteracjach pierwiastek wielomianu {p} to:", "{:.10f}\n".format(float(X_k)))
     return X_k
 
 
@@ -52,8 +52,16 @@ def laguerre(p, a, N):
 # przykladowe uzycie (dzielenie przez ujemna wartosc pierwiastka) (Funkcja nie ma miejsc zerowych)
 # python Laguerre.py [1,2,3] 2 10
 
-# przykladowe uzycie
-#
+# przykladowe uzycie 'prawidlowe' (miejsca zerowe to 0 i 1) - wartosc poczatkowa od 0.2 w góre obliczy miejsce zerowe '1', w p.p. '0'
+# python Laguerre.py '[1, -4, 6, -4, 1, 0]' -50 10
+
+
+# Ciekawy przyklad to python Laguerre.py [1,-2,3,-1] 2 10
+# Poniewaz przy powyzszym punkcie poczatkowym '2' metoda 'wysypuje sie'
+# Jednak przy punkcie poczatkowym mniejszym niz '1.13' i wiekszym niz '0.53' metoda dziala prawidlowo
+# python Laguerre.py [1,-2,3,-1] 1 10
+
+# python Laguerre.py [1,-5,6,1] -2 10
 
 if len(sys.argv) > 1:
     laguerre(sys.argv[1], sys.argv[2], int(sys.argv[3]))
