@@ -70,6 +70,10 @@ def laguerre(p, a, N):
 # przykladowe uzycie 
 # python Laguerre.py [1,-5,6,1] -2 10
 
+# przykladowe uzycie (względnie mała dokladnosc) (miejsca zerowe to -0.00001, 0.00001 oraz -0.0000000001
+# python Laguerre.py '[1, 0.0000000001, -0.0000000001, -0.00000000000000000001]' 2 100
+
+
 if len(sys.argv) > 1:
     laguerre(sys.argv[1], sys.argv[2], int(sys.argv[3]))
 else:
