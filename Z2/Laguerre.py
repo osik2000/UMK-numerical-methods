@@ -46,14 +46,19 @@ def laguerre(p, a, N):
     return X_k
 
 
-# przykladowe uzycie (dzielenie przez 0) (Funkcja zwroci ostatnią wartość, która jest zbliżona do miejsca zerowego):
+# przykladowe uzycie
 # python Laguerre.py [1,2,3,-1] 1.5 10
 
 # przykladowe uzycie (dzielenie przez ujemna wartosc pierwiastka) (Funkcja nie ma miejsc zerowych)
 # python Laguerre.py [1,2,3] 2 10
 
+# przykladowe uzycie (miejsca zerowe to 0 i 1.2711) - wartosc poczatkowa musi byc pomiedzy -0.96 a 3.35 aby metoda dzialala prawidlowo, inaczej metoda nie bedzie dzialac
+# python Laguerre.py '[2, -4, 5, -4, 0]' -5 10
+# python Laguerre.py '[2, -4, 5, -4, 0]' 3 10
+
 # przykladowe uzycie 'prawidlowe' (miejsca zerowe to 0 i 1) - wartosc poczatkowa od 0.2 w góre obliczy miejsce zerowe '1', w p.p. '0'
 # python Laguerre.py '[1, -4, 6, -4, 1, 0]' -50 10
+# python Laguerre.py '[1, -4, 6, -4, 1, 0]' 5 10
 
 
 # Ciekawy przyklad to python Laguerre.py [1,-2,3,-1] 2 10
@@ -61,6 +66,8 @@ def laguerre(p, a, N):
 # Jednak przy punkcie poczatkowym mniejszym niz '1.13' i wiekszym niz '0.53' metoda dziala prawidlowo
 # python Laguerre.py [1,-2,3,-1] 1 10
 
+
+# przykladowe uzycie 
 # python Laguerre.py [1,-5,6,1] -2 10
 
 if len(sys.argv) > 1:
